@@ -8,8 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -52,6 +56,8 @@ public class MainActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private ArrayAdapter<String> mForecastAdapter;
+
         public PlaceholderFragment() {
         }
 
@@ -59,15 +65,6 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            /*ArrayList<String> forecast = new ArrayList<String>();
-            forecast.add("Today - Sunny - 88/63");
-            forecast.add("Tomorrow - Foggy - 70/46");
-            forecast.add("Weds - Cloudy - 72/63");
-            forecast.add("Thurs - Rainy - 64/51");
-            forecast.add("Fri - Foggy - 70/46");
-            forecast.add("Sat - Sunny - 76/68");
-            */
 
             String[] forecastArray = {
                     "Today - Sunny - 88/63",
@@ -77,6 +74,19 @@ public class MainActivity extends ActionBarActivity {
                     "Fri - Foggy - 70/46",
                     "Sat - Sunny - 76/68"
             };
+
+            List<String> weekForecast = new ArrayList<String>(
+                    Arrays.asList(forecastArray));
+
+            mForecastAdapter = new ArrayAdapter<String>(
+                    getActivity(),
+                    R.layout.list_item_forecast,
+                    R.id.list_item_forecast_textview,
+                    weekForecast);
+
+            ListView lv = (ListView)rootView.findViewById(R.id.listview_forecast);
+
+            lv.setAdapter(mForecastAdapter);
 
             return rootView;
         }
